@@ -360,6 +360,8 @@ function parse_info_tpl($info_tpl, $string, $jump_url, $time)
         $tpl_content = str_replace('{info}', $string, $tpl_content);
         $tpl_content = str_replace('{url}', $jump_url, $tpl_content);
         $tpl_content = str_replace('{time}', $time, $tpl_content);
+        $tpl_content = str_replace('{sitedir}', SITE_DIR, $tpl_content);
+        $tpl_content = str_replace('{coredir}', CORE_DIR, $tpl_content);
         return $tpl_content;
     } else {
         exit('<div style="font-size:50px;">:(</div>提示信息的模板文件不存在！');
@@ -824,7 +826,9 @@ function create_session_dir($path, $depth)
     );
     
     foreach ($char as $value) {
-        check_dir($path . '/' . $value, true);
+        if (! check_dir($path . '/' . $value, true)) {
+            error('会话目录写入权限不足！');
+        }
         create_session_dir($path . '/' . $value, $depth);
     }
 }

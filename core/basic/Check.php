@@ -79,6 +79,14 @@ class Check
         if (! function_exists('scandir')) {
             error('您系统PHP.ini配置中已经禁用scandir函数，会导致无法正常读取配置及模板文件，请先去除.');
         }
+        
+        // 目录权限判断
+        if (! is_writable(RUN_PATH)) {
+            error('缓存目录写入权限不足！' . RUN_PATH);
+        }
+        if (! is_writable(DOC_PATH . STATIC_DIR . '/upload')) {
+            error('上传目录写入权限不足！' . DOC_PATH . STATIC_DIR . '/upload');
+        }
     }
 
     // 检查系统默认首页的文件是否存在，不存在进行自动创建
