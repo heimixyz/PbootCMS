@@ -54,7 +54,18 @@ class Check
             check_dir(APP_PATH . '/common', true);
             check_dir(CONF_PATH, true);
             check_dir(RUN_PATH, true);
-            check_dir(DOC_PATH . STATIC_DIR, true);
+            check_dir(DOC_PATH . STATIC_DIR . '/upload', true);
+        } else {
+            check_dir(RUN_PATH, true);
+            check_dir(DOC_PATH . STATIC_DIR . '/upload', true);
+        }
+        
+        // 目录权限判断
+        if (! is_writable(RUN_PATH)) {
+            error('缓存目录写入权限不足！' . RUN_PATH);
+        }
+        if (! is_writable(DOC_PATH . STATIC_DIR . '/upload')) {
+            error('上传目录写入权限不足！' . DOC_PATH . STATIC_DIR . '/upload');
         }
     }
 
@@ -78,14 +89,6 @@ class Check
         // 判断目录列表函数
         if (! function_exists('scandir')) {
             error('您系统PHP.ini配置中已经禁用scandir函数，会导致无法正常读取配置及模板文件，请先去除.');
-        }
-        
-        // 目录权限判断
-        if (! is_writable(RUN_PATH)) {
-            error('缓存目录写入权限不足！' . RUN_PATH);
-        }
-        if (! is_writable(DOC_PATH . STATIC_DIR . '/upload')) {
-            error('上传目录写入权限不足！' . DOC_PATH . STATIC_DIR . '/upload');
         }
     }
 

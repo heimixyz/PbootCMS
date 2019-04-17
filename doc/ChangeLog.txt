@@ -6,6 +6,7 @@
 
 PbootCMS V1.3.9 build 2019-05-12
 1、优化相关目录权限不足报错机制；
+2、修复PHP56有时后台更新无法使用问题；
 
 PbootCMS V1.3.8 build 2019-04-12
 1、新增同时支持fsockopen及stream_socket_client发送邮件；
