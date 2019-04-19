@@ -566,6 +566,9 @@ function session($name, $value = null)
 {
     if (! isset($_SESSION)) {
         session_start(); // 自动启动会话
+        if (! session_save_path() && ! is_writable($_SERVER['TMP'] . '/sess_' . session_id())) {
+            error(' 操作系统缓存目录写入权限不足！' . $_SERVER['TMP']);
+        }
     }
     
     if (! is_null($value)) {
